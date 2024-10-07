@@ -75,3 +75,60 @@ Para elegir una variable a predecir en tu dataset de taxis amarillos de Nueva Yo
 2. **Passenger_count (Cantidad de pasajeros)**: Aunque es una variable que depende de la entrada manual del conductor, podrías intentar predecir cuántos pasajeros probablemente utilizarán un taxi en función de la hora, la ubicación y otros factores. Esto podría ser útil para entender mejor el comportamiento de los clientes y optimizar el servicio.
 
 3. **RateCodeID (Tipo de tarifa)**: Podrías también predecir el tipo de tarifa. Esto te permitiría anticipar si el viaje es estándar, a un aeropuerto (JFK, Newark), o negociado, lo cual podría ayudar a hacer predicciones de ingresos y optimizar las asignaciones de taxis para estos viajes.
+
+4. **Pasaje intra o extra distrito**: predecir si el viaje sera dentro o fuera del mismo distrito.
+
+# Dataset Fuel Rating
+Tus datos parecen estar divididos en tres tipos de vehículos: vehículos convencionales (gasolina/diesel), híbridos enchufables, y vehículos eléctricos de batería. Cada fila de tus tablas representa un vehículo específico (identificado por el **año del modelo**, **marca**, **modelo** y otras características técnicas) y proporciona datos relacionados con su consumo de combustible o electricidad, así como sus emisiones de CO2. Te explico cómo podrías identificar si es un vehículo eléctrico o no, y cómo podrías utilizar los datos para estimar los costos de combustible o electricidad.
+
+### Identificación del tipo de vehículo
+1. **Vehículos convencionales (gasolina/diesel):**  
+   - Aparecen en la primera tabla.
+   - Variables como el **Fuel type** (tipo de combustible) te indicarán si el vehículo usa gasolina o diesel.
+   - Otras variables clave: 
+     - **City (L/100 km)**: Consumo en ciudad (litros por 100 km).
+     - **Highway (L/100 km)**: Consumo en carretera.
+     - **Combined (L/100 km)**: Consumo combinado.
+     - **CO2 emissions (g/km)**: Emisiones de dióxido de carbono.
+
+2. **Vehículos híbridos enchufables (plug-in hybrids):**  
+   - Aparecen en la segunda tabla.
+   - Se identifican por la variable **Type de carburant 1** (Tipo de combustible 1) y **Type de carburant 2** (Tipo de combustible 2). Estos vehículos combinan combustible tradicional (gasolina/diesel) con energía eléctrica.
+   - Variables clave adicionales:
+     - **Combinee Le/100 km**: Consumo combinado equivalente en litros por 100 km para electricidad.
+     - **Autonomie 1 (km)**: Autonomía en modo eléctrico.
+     - **Temps de recharge (h)**: Tiempo de recarga de la batería.
+
+3. **Vehículos eléctricos de batería (battery-electric vehicles):**  
+   - Aparecen en la tercera tabla.
+   - Estos vehículos no usan combustible convencional, por lo que su consumo se mide en **kWh/100 km** (kilovatios-hora por cada 100 km).
+   - Variables clave adicionales:
+     - **City (kWh/100 km)** y **Highway (kWh/100 km)**: Consumo eléctrico en ciudad y carretera.
+     - **Combined (kWh/100 km)**: Consumo combinado en kWh.
+     - **Range (km)**: Autonomía total en modo eléctrico.
+     - **Recharge time (h)**: Tiempo de recarga.
+
+### Diferenciar los vehículos
+- **Vehículos convencionales**: Si en la tabla se especifica un valor en las columnas de consumo en litros por 100 km (`City (L/100 km)`), puedes estar seguro de que no es un vehículo eléctrico.
+- **Vehículos híbridos enchufables**: Si hay dos tipos de combustible mencionados (`Type de carburant 1` y `Type de carburant 2`), o si se menciona la autonomía en modo eléctrico o el tiempo de recarga, estás tratando con un híbrido enchufable.
+- **Vehículos eléctricos**: Si el consumo se mide en **kWh/100 km**, es un vehículo eléctrico puro.
+
+### Estimación del gasto en combustible o electricidad
+1. **Vehículos convencionales:**  
+   Para estimar el gasto de combustible, puedes usar el valor de consumo combinado en litros por cada 100 km (`Combined (L/100 km)`), multiplicado por el costo del combustible por litro y la distancia del viaje en kilómetros. Fórmula básica:
+   ``` 
+   Gasto_combustible = (Distancia_recorrida / 100) * Consumo_combustible * Precio_combustible_por_litro
+   ```
+
+2. **Vehículos híbridos enchufables:**  
+   El cálculo es un poco más complejo, porque depende de cuánta distancia se recorre en modo eléctrico y cuánta en modo de combustible. Para el tramo eléctrico, usarías el consumo eléctrico equivalente en litros por 100 km (`Combinee Le/100 km`), y para el tramo de combustible, el consumo normal de combustible (`Ville (L/100 km)` o `Route (L/100 km)`).
+   ``` 
+   Gasto_total = (Distancia_en_modo_electrico / 100) * Consumo_electrico * Precio_electricidad + 
+                (Distancia_en_modo_combustible / 100) * Consumo_combustible * Precio_combustible
+   ```
+
+3. **Vehículos eléctricos:**  
+   El cálculo se basa en el consumo en **kWh/100 km** y el costo de la electricidad por kWh:
+   ``` 
+   Gasto_electricidad = (Distancia_recorrida / 100) * Consumo_electrico * Precio_kWh
+   ```
