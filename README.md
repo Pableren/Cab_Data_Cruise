@@ -3,11 +3,21 @@
 <img src="images/logo_taxi.jpg" width="300" height="300">
 
 ## Contexto
-En la ciudad de Nueva York, los servicios de taxis y de viajes compartidos como Uber han transformado la movilidad urbana, proporcionando una opción conveniente y accesible tanto para turistas como para locales. Estos servicios generan una gran cantidad de datos, incluyendo detalles sobre la ubicación de los vehículos, la duración de los viajes, las tarifas y la cantidad de pasajeros. Esta información es invaluable para empresas que desean comprender mejor los patrones de demanda, los costos operativos y las oportunidades de expansión en el mercado del transporte de pasajeros.
+En la ciudad de Nueva York, los servicios de taxis y viajes compartidos como Uber han transformado la movilidad urbana, ofreciendo una opción conveniente y accesible tanto para turistas como para locales. Estos servicios generan una gran cantidad de datos, que incluyen detalles sobre la ubicación de los vehículos, duración de los viajes, tarifas y cantidad de pasajeros. Esta información resulta invaluable para empresas que desean comprender mejor los patrones de demanda, los costos operativos y las oportunidades de expansión en el mercado del transporte de pasajeros.
 
-Un cliente que maneja una empresa de transporte que actualmente opera en el sector de micros de media y larga distancia ubicada en Manhattan está evaluando la posibilidad de expandirse hacia el transporte de pasajeros en automóviles y necesita evaluar los costes de transportar los pasajeros en autos electricos o a combustion interna. Con el objetivo de maximizar sus ingresos y controlar los costos operativos, están interesados en realizar ademas un análisis preliminar sobre el uso, los costos de combustible de los vehículos que operan en Nueva York y la emision de CO2 generada. Quieren entender cómo se relacionan variables como el tipo de vehículo, el consumo de combustible y los costos por kilómetro recorrido, con el fin de tomar decisiones estratégicas sobre su inversión en este sector.
+Una empresa de transporte de media y larga distancia, con una sólida presencia en Manhattan, está evaluando la posibilidad de expandirse hacia el mercado de taxis y viajes compartidos. Para tomar una decisión informada, desean realizar un análisis exhaustivo que les permita abordar los siguientes aspectos:
 
-El area de finanzas de la empresa de nuestro cliente, consideraron primero estimar cuantos viajes pudieran llegar a realizarse durante el proximo dia, en que horarios e intentando diferenciar si esos viajes van a ser dentro del distrito local(Manhattan) o fuera del distrito y segundo como parte de la iniciativa de reducir el impacto al medio ambiente consideraron realizar una comparacion entre la emision de co2 de vehiculos que utilizan combustion interna contra la emision que generan vehiculos hibridos.
+- Optimización de la flota: Determinar el tamaño óptimo de la flota y la proporción adecuada entre vehículos eléctricos y de combustión interna para satisfacer la demanda prevista, tanto dentro como fuera de Manhattan.
+
+- Minimización de costos operativos: Evaluar los costos de operación asociados con cada tipo de vehículo. Esto incluye el consumo de combustible, costos de mantenimiento, y el costo de la carga eléctrica para los vehículos eléctricos, con el objetivo de maximizar la eficiencia de la flota.
+
+- Reducción del impacto ambiental: Comparar las emisiones de CO2 entre vehículos de combustión interna y eléctricos, cuantificando el impacto ambiental y explorando el potencial de reducción de emisiones mediante la adopción de vehículos híbridos o eléctricos, como parte de una iniciativa verde para reducir la huella de carbono.
+
+- Maximización de ingresos: Predecir la demanda de viajes en función de las zonas geográficas (tanto dentro como fuera de Manhattan), horarios y tipo de vehículo. La empresa busca ajustar tarifas y optimizar la asignación de vehículos para responder de manera eficiente a los picos de demanda, aumentando así los ingresos.
+
+El área de finanzas de la empresa también ha considerado una primera estimación sobre cuántos viajes podrían realizarse en un día típico, diferenciando entre los realizados dentro del distrito local de Manhattan y aquellos fuera de él. Además, este análisis preliminar incluiría una evaluación de los costos por kilómetro recorrido según el tipo de vehículo, ya sea eléctrico o de combustión interna, permitiendo una comparación directa de costos y emisiones.
+
+Este enfoque permitirá a la empresa no solo optimizar su operación y controlar los costos, sino también mejorar su competitividad en un mercado dinámico como el transporte de pasajeros en Nueva York.
 
 
 ## Rol a desarrollar
@@ -26,8 +36,9 @@ Ademas, la empresa requiere proyectar su flota sobre los datos de TLC, considera
 - Desgaste_CI: Expresa el costo en dolares que tendria el uso del vehiculo de combustion interna. (CI=Combustion Interna)
 - Desgaste_E: Expresa el costo en dolares que tendria el uso del vehiculo electrico.
 - Desgaste_H: Expresa el costo en dolares que tendria el uso del vehiculo hibrido.
-- Duracion de viajes (Continua)
-- Viajes inter e intra boroughs(categorica)
+- Trip_Duration: Duracion de viajes (Continua)
+- Service: Viajes inter e intra boroughs(categorica)
+
 
 ## Indicadores
 
