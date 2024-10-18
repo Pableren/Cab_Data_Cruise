@@ -31,6 +31,9 @@ Los **objetivos** que requiere la empresa son realizar un **presupuesto** de la 
 Ademas, la empresa requiere proyectar su flota sobre los datos de TLC, considerando que su flota se compone por:
 50% de las unidades(taxis) son de combustion interna, 30% de unidades son electricas y 20% son hibridos(plug-in).
 
+- Presupuesto
+- Cantidad de viajes en las proximas horas
+
 ## Variables sinteticas
 
 - Desgaste_CI: Expresa el costo en dolares que tendria el uso del vehiculo de combustion interna. (CI=Combustion Interna)
