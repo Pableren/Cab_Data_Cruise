@@ -26,7 +26,7 @@ El equipo deberá utilizar los datos disponibles sobre el consumo de combustible
 
 ## Objetivos
 
-Los **objetivos** que requiere la empresa son realizar un **presupuesto** de la proxima semana, obteniendo predicciones sobre cuantos viajes se realizaran y cuanto puede llegar a ser la distancia de cada viaje.
+Los **objetivos** que requiere la empresa son realizar un **presupuesto** del gasto de cada tipo de vehiculo, obteniendo predicciones sobre cuantos viajes se realizaran y analizar el desgaste vehicular.
 
 Ademas, la empresa requiere proyectar su flota sobre los datos de TLC, considerando que su flota se compone por:
 50% de las unidades(taxis) son de combustion interna, 30% de unidades son electricas y 20% son hibridos(plug-in).
@@ -36,9 +36,8 @@ Ademas, la empresa requiere proyectar su flota sobre los datos de TLC, considera
 
 ## Variables sinteticas
 
-- Desgaste_CI: Expresa el costo en dolares que tendria el uso del vehiculo de combustion interna. (CI=Combustion Interna)
-- Desgaste_E: Expresa el costo en dolares que tendria el uso del vehiculo electrico.
-- Desgaste_H: Expresa el costo en dolares que tendria el uso del vehiculo hibrido.
+- Desgaste = Indica el desgaste vehicular expresado en dolares dependiendo de la distancia del viaje.
+- fuel_type = Indica el tipo de energia que consume el vehiculo.
 - Trip_Duration: Duracion de viajes (Continua)
 - Service: Viajes inter e intra boroughs(categorica)
 
