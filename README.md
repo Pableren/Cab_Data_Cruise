@@ -7,14 +7,15 @@ En la ciudad de Nueva York, los servicios de taxis y viajes compartidos como Ube
 
 Una empresa de transporte de media y larga distancia, con una sólida presencia en Manhattan, está evaluando la posibilidad de expandirse hacia el mercado de taxis y viajes compartidos. Para tomar una decisión informada, desean realizar un análisis exhaustivo que les permita abordar los siguientes aspectos:
 
-- Optimización de la flota: Determinar el tamaño óptimo de la flota y la proporción adecuada entre vehículos eléctricos y de combustión interna para satisfacer la demanda prevista, tanto dentro como fuera de Manhattan.
+- Optimización de la flota: Determinar la composición ideal de la flota, es decir, la proporción óptima de unidades eléctricas, de combustión interna e híbridas para satisfacer la demanda a lo largo del día.
 
-- Minimización de costos operativos: Evaluar los costos de operación asociados con cada tipo de vehículo. Esto incluye el consumo de combustible, costos de mantenimiento, y el costo de la carga eléctrica para los vehículos eléctricos, con el objetivo de maximizar la eficiencia de la flota.
+- Minimización de costos operativos: Realizar un análisis detallado de los costos asociados a cada unidad, considerando el consumo de combustible o energía eléctrica, mantenimiento y seguros. El objetivo es identificar la unidad más eficiente en términos de costo por kilómetro recorrido.
 
 - Reducción del impacto ambiental: Comparar las emisiones de CO2 entre vehículos de combustión interna y eléctricos, cuantificando el impacto ambiental y explorando el potencial de reducción de emisiones mediante la adopción de vehículos híbridos o eléctricos, como parte de una iniciativa verde para reducir la huella de carbono.
 
 - Maximización de ingresos: El área de finanzas de la empresa considero predecir la demanda de viajes en función del horario y tipo de vehículo. La empresa busca ajustar tarifas y optimizar la asignación de vehículos para responder de manera eficiente a los picos de demanda, aumentando así los ingresos.
 
+- Evaluacion de kpis: El primer kpi solicitado fue de la cantidad de CO2 emitido y el segundo fue de la cantidad de ganancia neta obtenida por la totalidad de los viajes.
 
 Este enfoque permitirá a la empresa no solo optimizar su operación y controlar los costos, sino también mejorar su competitividad en un mercado dinámico como el transporte de pasajeros en Nueva York.
 
@@ -30,15 +31,13 @@ Los **objetivos** que requiere la empresa son:
 - Minimizar costos operativos
 - Evaluar el impacto ambiental de los tipos de vehiculos
 - Predecir la demanda de viajes
+- Evaluar los kpis
 
 
-Ademas el equipo realizar un **presupuesto** del gasto de cada tipo de vehiculo, obteniendo predicciones sobre cuantos viajes se realizaran y analizar el desgaste vehicular.
+Ademas uno de los gerentes pidio realizar un **tablero** interactivo para expandir el analisis ademas de poder visualizar los kpis propuestos por la empresa.
 
-Ademas, la empresa requiere proyectar su flota sobre los datos de TLC, considerando que su flota se compone por:
+La empresa tambien requiere proyectar su flota sobre los datos de TLC, considerando que su flota se compone por:
 50% de las unidades(taxis) son de combustion interna, 30% de unidades son electricas y 20% son hibridos(plug-in).
-
-- Presupuesto
-- Cantidad de viajes en las proximas horas
 
 ## Variables sinteticas
 
