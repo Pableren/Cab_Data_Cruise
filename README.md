@@ -13,20 +13,26 @@ Una empresa de transporte de media y larga distancia, con una sólida presencia 
 
 - Reducción del impacto ambiental: Comparar las emisiones de CO2 entre vehículos de combustión interna y eléctricos, cuantificando el impacto ambiental y explorando el potencial de reducción de emisiones mediante la adopción de vehículos híbridos o eléctricos, como parte de una iniciativa verde para reducir la huella de carbono.
 
-- Maximización de ingresos: Predecir la demanda de viajes en función de las zonas geográficas (tanto dentro como fuera de Manhattan), horarios y tipo de vehículo. La empresa busca ajustar tarifas y optimizar la asignación de vehículos para responder de manera eficiente a los picos de demanda, aumentando así los ingresos.
+- Maximización de ingresos: El área de finanzas de la empresa considero predecir la demanda de viajes en función del horario y tipo de vehículo. La empresa busca ajustar tarifas y optimizar la asignación de vehículos para responder de manera eficiente a los picos de demanda, aumentando así los ingresos.
 
-El área de finanzas de la empresa también ha considerado una primera estimación sobre cuántos viajes podrían realizarse en un día típico, diferenciando entre los realizados dentro del distrito local de Manhattan y aquellos fuera de él. Además, este análisis preliminar incluiría una evaluación de los costos por kilómetro recorrido según el tipo de vehículo, ya sea eléctrico o de combustión interna, permitiendo una comparación directa de costos y emisiones.
 
 Este enfoque permitirá a la empresa no solo optimizar su operación y controlar los costos, sino también mejorar su competitividad en un mercado dinámico como el transporte de pasajeros en Nueva York.
 
-
 ## Rol a desarrollar
-El equipo deberá utilizar los datos disponibles sobre el consumo de combustible y otros aspectos de los vehículos para calcular costos por kilómetro recorrido. Estos cálculos ayudarán a la empresa a prever los gastos operativos, que son fundamentales para elaborar presupuestos precisos para su flota. Además, el equipo deberá entrenar modelos predictivos para estimar el Monto total del viaje, así como la Cantidad de pasajeros que podrían utilizar estos servicios en diferentes escenarios, lo cual permitirá a la empresa optimizar su operación y maximizar sus ingresos.
+El equipo deberá utilizar los datos disponibles sobre el consumo de combustible y otros aspectos de los vehículos para calcular costos por kilómetro recorrido. Estos cálculos ayudarán a la empresa a prever los gastos operativos, que son fundamentales para elaborar presupuestos precisos para su flota. Además, el equipo deberá entrenar modelos predictivos para estimar la cantidad de viajes que podrian llegar a tener cada unidad, lo cual permitirá a la empresa optimizar su operación y maximizar sus ingresos.
 
 
 ## Objetivos
 
-Los **objetivos** que requiere la empresa son realizar un **presupuesto** del gasto de cada tipo de vehiculo, obteniendo predicciones sobre cuantos viajes se realizaran y analizar el desgaste vehicular.
+Los **objetivos** que requiere la empresa son:
+
+- Optimizar la flota
+- Minimizar costos operativos
+- Evaluar el impacto ambiental de los tipos de vehiculos
+- Predecir la demanda de viajes
+
+
+Ademas el equipo realizar un **presupuesto** del gasto de cada tipo de vehiculo, obteniendo predicciones sobre cuantos viajes se realizaran y analizar el desgaste vehicular.
 
 Ademas, la empresa requiere proyectar su flota sobre los datos de TLC, considerando que su flota se compone por:
 50% de las unidades(taxis) son de combustion interna, 30% de unidades son electricas y 20% son hibridos(plug-in).
