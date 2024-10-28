@@ -45,6 +45,7 @@ La empresa tambien requiere proyectar su flota sobre los datos de TLC, considera
 - fuel_type = Indica el tipo de energia que consume el vehiculo.
 - Trip_Duration: Duracion de viajes (Continua)
 - Service: Viajes inter e intra boroughs(categorica)
+- Labor: Servicio del empleado
 
 
 ## Indicadores
