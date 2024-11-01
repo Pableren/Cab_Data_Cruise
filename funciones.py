@@ -47,3 +47,13 @@ def time_series(df,variable,temporalidades):
         plt.title(f'{variable} vs {col}')
         plt.xlabel(col)
         plt.ylabel("kW")
+        
+        
+def normalize(df):
+    result = df.copy()
+    for feature_name in df.columns:
+        max_val = df[feature_name].max()
+        min_val = df[feature_name].min()
+        result[feature_name] = (df[feature_name] - min_val) / (max_val - min_val)
+
+    return result
