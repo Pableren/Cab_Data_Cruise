@@ -62,6 +62,8 @@ La empresa tambien requiere proyectar su flota sobre los datos de TLC, considera
 - Distancia del viaje.
 
 
+
+
 Este análisis permitirá a la empresa tomar decisiones bien fundamentadas sobre la viabilidad de su expansión al sector del transporte de pasajeros en automóviles, mejorando su rentabilidad y eficiencia operativa.
 
 
