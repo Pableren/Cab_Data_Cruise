@@ -39,6 +39,29 @@ Ademas uno de los gerentes pidio realizar un **tablero** interactivo para expand
 La empresa tambien requiere proyectar su flota sobre los datos de TLC, considerando que su flota se compone por:
 50% de las unidades(taxis) son de combustion interna, 30% de unidades son electricas y 20% son hibridos(plug-in).
 
+## Recopilacion de datos
+
+Los datos seran extraidos de la pagina oficial de TLC. 
+Encontramos los datos en formato parquet, lo cual es conveniente para el desarrollo del proyecto debido a lo comprimido que estan estos datos ademas de que se encuentran en el formato necesario a utilizar es decir de tipo tabla.
+
+Se implementa un proceso ETL el cual se desarrollara luego.
+
+## Herramientas utilizadas:
+
+### AWS
+
+- Amazon Elastic Compute Cloud(EC2)
+- S3
+- SageMaker
+- Amazon QuickSight
+
+### Python
+
+- Pandas, Numpy, pyarrow
+- Matplotlib, Seaborn
+- Sklearn, Autoregresive Models
+
+
 ## Variables sinteticas
 
 - Desgaste = Indica el desgaste vehicular expresado en dolares dependiendo de la distancia del viaje.
