@@ -1,6 +1,9 @@
-# Taxis New York
+# Cab Data Cruise
 
 <img src="images/logo_taxi.jpg" width="300" height="300">
+
+## Information Company
+>*El nombre CabDataCruise es por el juego de palabras que combina "cab" (taxi en inglés) y "cruise" (crucero), sugiriendo un recorrido por los datos.*
 
 ## Contexto
 En la ciudad de Nueva York, los servicios de taxis y viajes compartidos como Uber han transformado la movilidad urbana, ofreciendo una opción conveniente y accesible tanto para turistas como para locales. Estos servicios generan una gran cantidad de datos, que incluyen detalles sobre la ubicación de los vehículos, duración de los viajes, tarifas y cantidad de pasajeros. Esta información resulta invaluable para empresas que desean comprender mejor los patrones de demanda, los costos operativos y las oportunidades de expansión en el mercado del transporte de pasajeros.
