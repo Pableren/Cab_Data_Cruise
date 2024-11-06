@@ -15,4 +15,7 @@
 
 
 
+
 # Flujo del proyecto
+
+<img src="../images/Taxis_DF.drawio.png" width="700" height="500">
