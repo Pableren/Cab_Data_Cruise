@@ -1,107 +1,38 @@
-Aquí tienes un flujo detallado para implementar un proceso de web scraping con Selenium en Python en AWS, usando EC2 para el contenedor y S3 para almacenar los datos. A continuación, cada paso se presenta con su respectivo servicio de AWS:
+### 1. **Crear y Configurar la Instancia EC2**
+   - **Acceso a la consola de AWS**: Inicia sesión y selecciona Amazon EC2. 
+   - **Lanzamiento de instancia**: Utiliza una **Amazon Machine Image (AMI)** adecuada, como **Amazon Linux 2**.
+   - **Tipo de instancia**: Define el tipo de instancia de acuerdo con los recursos necesarios (por ejemplo, `t2.micro` para pruebas).
+   - **Red y permisos**:
+     - **Subred pública**: Configura la instancia en una subred pública si necesita acceso a Internet, o privada con una puerta de enlace NAT si el acceso a Internet se hará a través de esta.
+     - **Permisos de S3**: Asigna un rol IAM a la instancia con permisos para S3. Un ejemplo de política JSON podría permitir acceso a un bucket específico.
+   - **Detalles de seguridad**: Asegúrate de habilitar el puerto 22 para SSH y otros puertos necesarios para tu contenedor (por ejemplo, 80 o 443 para servicios web).
 
----
+### 2. **Preparar el Contenedor Docker**
+   - **Dockerfile**: Define un Dockerfile en tu máquina local que especifique todas las dependencias, configuraciones y scripts necesarios para el contenedor.
+     - **Instalación de dependencias**: Incluye instrucciones para instalar Python, `boto3` (para interactuar con S3), y cualquier otra librería necesaria.
+     - **Instalación de Selenium, Chrome y Chromedriver**: Si usas herramientas como Selenium, Chrome y Chromedriver, inclúyelas en el Dockerfile. Añade las variables de entorno (`CHROME_BIN` y `CHROMEDRIVER`) para que Selenium encuentre las rutas correctas.
+   - **Construcción de la imagen Docker**: Ejecuta el comando `docker build` en el directorio del Dockerfile para crear la imagen local.
+   - **Pruebas locales**: Puedes probar la imagen localmente ejecutando un contenedor desde la imagen para asegurarte de que funciona correctamente antes de subirla a AWS.
 
-### **1. Preparar la Imagen Docker para Web Scraping**
-   - **Servicio:** Localmente (Docker)
-   - **Objetivo:** Crear una imagen Docker que incluya Python, Selenium, Chrome y ChromeDriver, además del script de scraping.
-   - **Pasos:**
-     1. Escribe un `Dockerfile` que instale todas las dependencias, incluyendo:
-         - **Python y Selenium** para manejar el scraping.
-         - **Google Chrome y ChromeDriver** para ejecutar el navegador en modo headless.
-     2. Asegúrate de que el script de scraping esté en el contenedor y que se ejecute automáticamente al iniciar el contenedor. El `Dockerfile` debería tener un aspecto similar al siguiente:
+### 3. **Subir la Imagen Docker a Amazon ECR**
+   - **Crear un repositorio en ECR**: Ve a Amazon ECR y crea un nuevo repositorio para almacenar la imagen de Docker.
+   - **Autenticación y subida de la imagen**:
+     - **Login**: Usa `aws ecr get-login-password` para autenticarte en ECR desde la terminal.
+     - **Tagging y push**: Etiqueta tu imagen local para que coincida con el nombre del repositorio de ECR y luego sube la imagen usando `docker push`.
 
-         ```Dockerfile
-         FROM python:3.9
-         RUN apt-get update && apt-get install -y wget gnupg
-         RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-         RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-         RUN apt-get update && apt-get install -y google-chrome-stable
-         RUN CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+') && \
-             wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip" && \
-             unzip /tmp/chromedriver.zip -d /usr/local/bin/ && \
-             rm /tmp/chromedriver.zip
-         RUN pip install selenium boto3
-         COPY ./app /app
-         WORKDIR /app
-         CMD ["python", "your_script.py"]
-         ```
+### 4. **Ejecutar el Contenedor Docker en la Instancia EC2**
+   - **Instalar Docker en EC2**: Accede a tu instancia EC2 y asegúrate de tener Docker instalado.
+   - **Autenticación en ECR desde EC2**: Realiza nuevamente el login en ECR desde la instancia EC2.
+   - **Ejecutar el contenedor**: Ejecuta el contenedor utilizando la imagen que subiste a ECR.
 
-   - **Resultado:** Imagen Docker lista para ejecutarse en EC2, configurada para realizar scraping y guardar resultados en S3.
+### 5. **Descargar y Cargar Datos en S3**
+   - **Configuración de S3**: Asegúrate de que tu contenedor, corriendo en EC2, tenga acceso a S3 utilizando el rol IAM asignado.
+   - **Scripts de Python para manipulación de datos**:
+     - **Script de descarga**: Un script Python (`descargar_datos.py`) puede descargar datos desde una URL o fuente externa, guardarlos localmente y luego subirlos a S3.
+     - **Script de carga incremental**: Otro script (`carga_incremental.py`) maneja la carga incremental de datos a S3. Puedes usar marcas de tiempo o fechas en el nombre del archivo para organizar las cargas en carpetas o según periodos.
 
-### **2. Subir la Imagen a Amazon Elastic Container Registry (ECR)**
-   - **Servicio:** Amazon Elastic Container Registry (ECR)
-   - **Objetivo:** Subir la imagen Docker a un registro accesible desde AWS.
-   - **Pasos:**
-     1. Inicia sesión en ECR y crea un repositorio para tu contenedor.
-     2. Usa la CLI de Docker para iniciar sesión en ECR, etiquetar la imagen local, y subirla al repositorio en ECR:
-        ```bash
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com
-        docker tag my-image:latest <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/my-repository:latest
-        docker push <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/my-repository:latest
-        ```
-   - **Resultado:** Imagen Docker almacenada en ECR, lista para usarse en EC2.
-
-### **3. Configurar una Instancia EC2 para Ejecutar el Contenedor**
-   - **Servicio:** Amazon EC2
-   - **Objetivo:** Ejecutar el contenedor en una instancia EC2 para realizar el scraping.
-   - **Pasos:**
-     1. Crea una instancia EC2, eligiendo el sistema operativo adecuado (por ejemplo, Amazon Linux 2 o Ubuntu).
-     2. Instala Docker en la instancia EC2 para ejecutar contenedores:
-        ```bash
-        sudo yum update -y
-        sudo amazon-linux-extras install docker
-        sudo service docker start
-        sudo usermod -a -G docker ec2-user
-        ```
-     3. Inicia sesión en ECR desde la instancia EC2 y ejecuta el contenedor desde el repositorio:
-        ```bash
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com
-        docker pull <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/my-repository:latest
-        docker run <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/my-repository:latest
-        ```
-   - **Resultado:** Contenedor ejecutándose en EC2, listo para realizar scraping.
-
-### **4. Configurar el Script de Scraping para Guardar en S3**
-   - **Servicio:** Amazon S3
-   - **Objetivo:** Almacenar los datos de scraping en un bucket S3.
-   - **Pasos:**
-     1. En el script de Python para scraping (`your_script.py`), utiliza la biblioteca `boto3` para interactuar con S3.
-     2. Configura el acceso a S3 en el script de Python, asegurándote de que la instancia EC2 tenga permisos de IAM para escribir en el bucket.
-     3. Sube los resultados del scraping a S3 al final del script:
-        ```python
-        import boto3
-
-        def upload_to_s3(file_name, bucket, object_name=None):
-            s3_client = boto3.client('s3')
-            if object_name is None:
-                object_name = file_name
-            try:
-                s3_client.upload_file(file_name, bucket, object_name)
-            except Exception as e:
-                print(e)
-        
-        # Luego de realizar el scraping
-        upload_to_s3("resultados_scraping.json", "mi-bucket-s3")
-        ```
-   - **Resultado:** Resultados del scraping almacenados en el bucket S3 especificado.
-
-### **5. Automatizar el Proceso y Supervisión**
-   - **Servicio:** AWS CloudWatch y Amazon S3
-   - **Objetivo:** Configurar la ejecución periódica y supervisar el proceso.
-   - **Pasos:**
-     1. Para ejecutar el contenedor automáticamente, puedes usar **AWS EventBridge** (para programar el inicio) o crear un script de ejecución periódica en EC2.
-     2. Habilita el envío de registros del contenedor a **AWS CloudWatch Logs** para monitorear el estado del proceso.
-     3. Configura alertas en CloudWatch para notificarte si hay errores o si el contenedor deja de ejecutarse inesperadamente.
-
----
-
-### **Resumen Final**
-   - **Servicios Usados:**
-     - **Local**: Crear y preparar la imagen Docker.
-     - **Amazon ECR**: Almacenar la imagen Docker.
-     - **Amazon EC2**: Ejecutar el contenedor.
-     - **Amazon S3**: Almacenar los datos de scraping.
-     - **AWS CloudWatch**: Monitorear el proceso.
-
-Este flujo debería darte un entorno robusto y escalable para realizar el scraping automatizado y almacenar los datos en AWS S3. ¿Te gustaría ayuda con alguna sección en detalle o algún ajuste adicional?
+### 6. **Consideraciones Finales**
+   - **Configuración de red y acceso a Internet**:
+     - Si necesitas acceso a servicios externos o a S3 desde una subred privada, asegúrate de tener configurada una puerta de enlace NAT en la VPC.
+   - **Manejo de permisos IAM**: Mantén configurados los permisos necesarios, tanto en el rol IAM como en las políticas de seguridad de S3 para los buckets involucrados.
+   - **Automatización de tareas**: Puedes programar la ejecución de estos scripts usando herramientas de cron o configurar eventos en AWS Lambda que activen estos scripts en momentos específicos.
