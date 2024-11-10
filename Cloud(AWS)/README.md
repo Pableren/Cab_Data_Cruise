@@ -54,4 +54,57 @@ Características de los buckets:
 - Acceso público: Evita el acceso público a menos que sea necesario.
 - Cumplimiento: Asegúrate de cumplir con las regulaciones aplicables.
 
+# IAM Role
+
+Pasos:
+
+<img src="../images/iam_create_rol.png" width="800" height="500">
+
+- Crear un nuevo rol
+- Asignar el servicio de AWS y caso de uso para S3.
+
+<img src="../images/iam_permisos.png" width="800" height="500">
+
+- Se asigna el nombre del rol: "de-s3access"
+
+<img src="../images/iam_permiso_creado.png" width="800" height="300">
+
+**Pasos para crear un rol de IAM y permitir acceso a un bucket S3 desde una instancia EC2:**
+
+1. **Crea un rol de IAM:**
+   * En la consola de IAM, crea un nuevo rol.
+   * Selecciona "AWS service" como entidad confiable.
+   * Elige "EC2" como servicio.
+   * Asigna una política:
+     * **AmazonS3ReadOnlyAccess:** Solo lectura en S3.
+     * **AmazonS3FullAccess:** Lectura y escritura en S3.
+     * **Política personalizada:** Define permisos específicos (ej: acceso a un bucket concreto).
+
+2. **Asociar el rol a la instancia EC2:**
+   * Ve a EC2 y selecciona la instancia.
+   * En "Descripción", asocia el rol recién creado.
+
+3. **Verificar acceso:**
+   * Conéctate a la instancia vía SSH.
+   * Utiliza la AWS CLI para listar los objetos en el bucket:
+     ```bash
+     aws s3 ls s3://nombre-del-bucket
+     ```
+
+**Ejemplo de política personalizada (solo lectura a un bucket):**
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::nombre-del-bucket/*"
+    }
+  ]
+}
+```
+
+
 
