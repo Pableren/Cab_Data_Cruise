@@ -21,6 +21,7 @@
 <img src="../images/Taxis_DF.drawio.png" width="700" height="500">
 
 
+
 # Step by Step
 
 ### Bucket creation
@@ -54,7 +55,7 @@ Características de los buckets:
 - Acceso público: Evita el acceso público a menos que sea necesario.
 - Cumplimiento: Asegúrate de cumplir con las regulaciones aplicables.
 
-# IAM Role
+# IAM (Identity and Access Management) Role 
 
 Pasos:
 
@@ -109,6 +110,20 @@ Pasos:
 
 # EC2
 
+#### Disclaimer
+En este guia, nos conectaremos a tráves de EC2 Instance Connect (MEC) debido a que con los permisos de IAM otorgados anteriormente, no sera necesario puTTy en nuestro caso, pero de ser asi, los pasos que deberian seguir para conectarse mediante puTTy si es necesario serian:
+
+- Descargar la llave(obligatorio de todas formas) al momento de lanzar la instancia
+- Convertir la clave .pem o .ppk con putty Key Generation o PuTTyGen(Solo dado el caso de que se eligio una llave .pem y usted se encuentra en windows debido a que puTTy utiliza .ppk por ejemplo, .pem son las llaves para OpenSSH que nos servirian de esta en Linux)
+- Conectarse a la instancia a tráves de puTTy y con esta nueva clave transformada.
+
+¿Es necesario usar llaves con EC2 Instance Connect (MEC)?
+No, con EC2 Instance Connect no necesitas usar las llaves SSH tradicionales (.pem o .ppk) para conectarte a tu instancia EC2. El proceso de conexión se realiza directamente desde la consola de AWS, y el acceso se gestiona mediante la autenticación a través de IAM, no por claves SSH.
+
+¿Cómo funciona EC2 Instance Connect (MEC)?
+En lugar de usar una clave SSH privada, EC2 Instance Connect utiliza tu usuario de IAM y la política asociada para autorizar la conexión. Cuando accedes a la consola de AWS y seleccionas la opción de "Conectar" para tu instancia EC2, AWS envía un comando de autorización a la instancia.
+
+**La instancia debe estar ejecutándose en la misma región que tu acceso.**
 
 Pasos:
 
@@ -116,31 +131,34 @@ Pasos:
 
 - Lanzar una instancia
 
-<img src="../images/ec2_1" width="800" height="500">
+<img src="../images/ec2_1.png" width="800" height="500">
 
-- Se asigna el nombre del rol: "de-s3access"
+- Se asigna el nombre de la instancia: "data-engineer"
 
-<img src="../images/iam_permiso_creado.png" width="800" height="300">
+- Crear un grupo de seguridad
 
-**Pasos para crear un rol de IAM y permitir acceso a un bucket S3 desde una instancia EC2:**
+<img src="../images/ec2_2.png" width="800" height="300">
 
-1. **Crea un rol de IAM:**
-   * En la consola de IAM, crea un nuevo rol.
-   * Selecciona "AWS service" como entidad confiable.
-   * Elige "EC2" como servicio.
-   * Asigna una política:
-     * **AmazonS3ReadOnlyAccess:** Solo lectura en S3.
-     * **AmazonS3FullAccess:** Lectura y escritura en S3.
-     * **Política personalizada:** Define permisos específicos (ej: acceso a un bucket concreto).
+- Asignar un almacenamiento
 
-2. **Asociar el rol a la instancia EC2:**
-   * Ve a EC2 y selecciona la instancia.
-   * En "Descripción", asocia el rol recién creado.
+<img src="../images/ec2_3.png" width="800" height="300">
 
-3. **Verificar acceso:**
-   * Conéctate a la instancia vía SSH.
-   * Utiliza la AWS CLI para listar los objetos en el bucket:
-     ```bash
-     aws s3 ls s3://nombre-del-bucket
-     ```
+<img src="../images/ec2_4.png" width="800" height="300">
 
+- Podemos acceder a la instancia desde id de la instancia
+
+<img src="../images/ec2_5.png" width="800" height="300">
+
+<img src="../images/ec2_6.png" width="800" height="300">
+<img src="../images/ec2_7.png" width="800" height="300">
+Con estos pasos, ya podremos acceder a nuestra maquina sin salir de la consola de AWS.
+
+- Conectarnos a la instancia
+
+<img src="../images/ec2_8.png" width="800" height="300">
+
+- Elegimos MEC para conectarnos
+
+<img src="../images/ec2_9.png" width="800" height="300">
+
+**nota: el nombre ec2-user viene predeterminadamente, pero si usted cambio el nombre de el servicio de IAM, deberia cambiarlo para que coincidan.*
