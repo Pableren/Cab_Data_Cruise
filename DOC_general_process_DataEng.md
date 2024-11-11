@@ -19,5 +19,3 @@ Aquí tienes un resumen en puntos del contenido del archivo:
 5. **Automatización y Mantenimiento**:
    - **Automatización**: Utiliza scripts y configuraciones para la automatización de tareas.
    - **Mantenimiento**: Asegura actualizaciones periódicas y monitoreo del estado del contenedor y la instancia EC2. 
-
-Este resumen recoge los puntos principales de forma directa y clara.
